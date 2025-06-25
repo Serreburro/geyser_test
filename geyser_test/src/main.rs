@@ -22,7 +22,8 @@ use yellowstone_grpc_proto::tonic::codegen::http;
 
 pub async fn monitor_meteora_pools() -> Result<(), Box<dyn Error>> {
     let mut subscription = HashMap::new();
-
+    let provider = rustls::crypto::ring::default_provider();
+    rustls::crypto::CryptoProvider::install_default(provider).expect("52");
     subscription.insert(
         "filter".to_string(),
         SubscribeRequestFilterAccounts {
